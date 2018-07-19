@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>百度地图</title>
+	<style type="text/css">
+		html{height:100%}  
+		body{height:100%;margin:0px;padding:0px}  
+		#container{height:100%}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=ZcaCh8HgG7nTPD0GNbanrYQnDsG3e1fc">
+		                          
+
+	</script>
+</head>
+<body>
+	<div id="container">
+	</div>
+</body>
+	<h1>ssd </h1> 
+	<script  type="text/javascript">
+		var map = new BMap.Map("container");
+		var point = new BMap.Point(116.404, 39.915);
+		map.centerAndZoom(point,15);
+
+		var cr = new BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_RIGHT});   //设置版权控件位置
+		map.addControl(cr); //添加版权控件
+
+		var bs = map.getBounds();   //返回地图可视区域
+		cr.addCopyright({id: 1, content: "<a href='#' style='font-size:20px;background:yellow'>我是自定义版权控件呀</a>", bounds: bs});
+
+		map.setCurrentCity("北京");
+		map.enableScrollWheelZoom(true);
+	</script>
+</html>
