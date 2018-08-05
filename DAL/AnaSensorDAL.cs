@@ -25,16 +25,16 @@ namespace DAL
                 new MySqlParameter("@h4l",anaSensor.H4l),
                 new MySqlParameter("@h3l",anaSensor.H3l),
                 new MySqlParameter("@h2l",anaSensor.H2l),
-                new MySqlParameter("@h2l",anaSensor.H1l),
+                new MySqlParameter("@h1l",anaSensor.H1l),
 
                 new MySqlParameter("@l1l",anaSensor.L1l),
                 new MySqlParameter("@l2l",anaSensor.L2l),
                 new MySqlParameter("@l3l",anaSensor.L3l),
-                new MySqlParameter("@l4l",anaSensor.L4l),
+                new MySqlParameter("@l4l",anaSensor.L4l)
             };
 
-            string cmdText = "insert into analogSensor (name,address,description,aInterval,aFormat,aMd,aMu,h4l,h3l,h2l,h1l,l1l,l2l,l3l,l4l)"+
-                "values(@name,@address,@description,@aInterval,@format,@md,@mu,@h4l,@h3l,@h2l,@h1l,@l1l,@l2l,@l3l,@l4l);";
+            string cmdText = "insert into analogSensor (name,address,description,aInterval,aFormat,aMd,aMu,ut,h4l,h3l,h2l,h1l,l1l,l2l,l3l,l4l)"+
+                " values (@name,@address,@description,@interval,@format,@md,@mu,@ut,@h4l,@h3l,@h2l,@h1l,@l1l,@l2l,@l3l,@l4l);";
 
             return base.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }
@@ -74,8 +74,23 @@ namespace DAL
                 sensor.Address = new SensorAddress( reader[1].ToString().Trim());
                 sensor.Description = reader[2].ToString().Trim();
 
-                sensor.Interval = int.Parse(reader[2].ToString().Trim());
-                sensor.Format = reader[3].ToString().Trim();
+                sensor.Interval = int.Parse(reader[3].ToString().Trim());
+                sensor.Format = reader[4].ToString().Trim();
+
+                sensor.Md = double.Parse(reader[5].ToString().Trim());
+                sensor.Mu = double.Parse(reader[6].ToString().Trim());
+                sensor.Ut = reader[7].ToString().Trim();
+
+                sensor.H4l = double.Parse(reader[8].ToString().Trim());
+                sensor.H3l = double.Parse(reader[9].ToString().Trim());
+                sensor.H2l = double.Parse(reader[10].ToString().Trim());
+                sensor.H1l = double.Parse(reader[11].ToString().Trim());
+
+                sensor.L1l = double.Parse(reader[12].ToString().Trim());
+                sensor.L2l = double.Parse(reader[13].ToString().Trim());
+                sensor.L3l = double.Parse(reader[14].ToString().Trim());
+                sensor.L4l = double.Parse(reader[15].ToString().Trim());
+
                 objs.Add(sensor);
             }
             this.mySqlHelper.CloseConn();
@@ -103,20 +118,20 @@ namespace DAL
 
                 anaSensor.Format = reader[4].ToString().Trim();
 
-                anaSensor.Md = double.Parse(reader[3].ToString().Trim());
-                anaSensor.Mu = double.Parse(reader[4].ToString().Trim());
+                anaSensor.Md = double.Parse(reader[5].ToString().Trim());
+                anaSensor.Mu = double.Parse(reader[6].ToString().Trim());
 
-                anaSensor.Ut = reader[5].ToString().Trim();
+                anaSensor.Ut = reader[7].ToString().Trim();
 
-                anaSensor.H4l = double.Parse(reader[6].ToString().Trim());
-                anaSensor.H3l = double.Parse(reader[7].ToString().Trim());
-                anaSensor.H2l = double.Parse(reader[8].ToString().Trim());
-                anaSensor.H1l = double.Parse(reader[9].ToString().Trim());
+                anaSensor.H4l = double.Parse(reader[8].ToString().Trim());
+                anaSensor.H3l = double.Parse(reader[9].ToString().Trim());
+                anaSensor.H2l = double.Parse(reader[10].ToString().Trim());
+                anaSensor.H1l = double.Parse(reader[11].ToString().Trim());
 
-                anaSensor.L1l = double.Parse(reader[10].ToString().Trim());
-                anaSensor.L2l = double.Parse(reader[11].ToString().Trim());
-                anaSensor.L3l = double.Parse(reader[12].ToString().Trim());
-                anaSensor.L4l = double.Parse(reader[13].ToString().Trim());
+                anaSensor.L1l = double.Parse(reader[12].ToString().Trim());
+                anaSensor.L2l = double.Parse(reader[13].ToString().Trim());
+                anaSensor.L3l = double.Parse(reader[14].ToString().Trim());
+                anaSensor.L4l = double.Parse(reader[15].ToString().Trim());
             }
             this.mySqlHelper.CloseConn();
             return anaSensor;
@@ -139,20 +154,20 @@ namespace DAL
 
                 anaSensor.Format = reader[4].ToString().Trim();
 
-                anaSensor.Md = double.Parse(reader[3].ToString().Trim());
-                anaSensor.Mu = double.Parse(reader[4].ToString().Trim());
+                anaSensor.Md = double.Parse(reader[5].ToString().Trim());
+                anaSensor.Mu = double.Parse(reader[6].ToString().Trim());
 
-                anaSensor.Ut = reader[5].ToString().Trim();
+                anaSensor.Ut = reader[7].ToString().Trim();
 
-                anaSensor.H4l = double.Parse(reader[6].ToString().Trim());
-                anaSensor.H3l = double.Parse(reader[7].ToString().Trim());
-                anaSensor.H2l = double.Parse(reader[8].ToString().Trim());
-                anaSensor.H1l = double.Parse(reader[9].ToString().Trim());
+                anaSensor.H4l = double.Parse(reader[8].ToString().Trim());
+                anaSensor.H3l = double.Parse(reader[9].ToString().Trim());
+                anaSensor.H2l = double.Parse(reader[10].ToString().Trim());
+                anaSensor.H1l = double.Parse(reader[11].ToString().Trim());
 
-                anaSensor.L1l = double.Parse(reader[10].ToString().Trim());
-                anaSensor.L2l = double.Parse(reader[11].ToString().Trim());
-                anaSensor.L3l = double.Parse(reader[12].ToString().Trim());
-                anaSensor.L4l = double.Parse(reader[13].ToString().Trim());
+                anaSensor.L1l = double.Parse(reader[12].ToString().Trim());
+                anaSensor.L2l = double.Parse(reader[13].ToString().Trim());
+                anaSensor.L3l = double.Parse(reader[14].ToString().Trim());
+                anaSensor.L4l = double.Parse(reader[15].ToString().Trim());
 
                 objs.Add(anaSensor);
             }
@@ -163,38 +178,47 @@ namespace DAL
 
         public int Modify(object oldObj, object newObj)
         {
-            AnalogSensor oldSensor = (AnalogSensor)oldObj;
-            AnalogSensor newSensor = (AnalogSensor)newObj;
+            try
+            {
+                AnalogSensor oldSensor = (AnalogSensor)oldObj;
+                AnalogSensor newSensor = (AnalogSensor)newObj;
 
-            MySqlParameter[] parms = new MySqlParameter[] {
+                MySqlParameter[] parms = new MySqlParameter[] {
                 new MySqlParameter("@name",oldSensor.Name),
 
-                new MySqlParameter("@address",oldSensor.Address.ToString()),
-                new MySqlParameter("@description", oldSensor.Description),
-                new MySqlParameter("@interval",oldSensor.Interval),
+                new MySqlParameter("@address",newSensor.Address.ToString()),
+                new MySqlParameter("@description", newSensor.Description),
+                new MySqlParameter("@interval",newSensor.Interval),
 
-                new MySqlParameter("@format",oldSensor.Format),
+                new MySqlParameter("@format",newSensor.Format),
 
-                new MySqlParameter("@md", oldSensor.Md),
-                new MySqlParameter("@mu", oldSensor.Mu),
+                new MySqlParameter("@md", newSensor.Md),
+                new MySqlParameter("@mu", newSensor.Mu),
 
-                new MySqlParameter("@ut", oldSensor.Ut),
+                new MySqlParameter("@ut", newSensor.Ut),
 
-                new MySqlParameter("@H4l", oldSensor.H4l),
-                new MySqlParameter("@H3l", oldSensor.H3l),
-                new MySqlParameter("@H2l", oldSensor.H2l),
-                new MySqlParameter("@H1l", oldSensor.H1l),
+                new MySqlParameter("@H4l", newSensor.H4l),
+                new MySqlParameter("@H3l", newSensor.H3l),
+                new MySqlParameter("@H2l", newSensor.H2l),
+                new MySqlParameter("@H1l", newSensor.H1l),
 
-                new MySqlParameter("@L1l", oldSensor.L1l),
-                new MySqlParameter("@L2l", oldSensor.L2l),
-                new MySqlParameter("@L3l", oldSensor.L3l),
-                new MySqlParameter("@L4l", oldSensor.L4l)};
+                new MySqlParameter("@L1l", newSensor.L1l),
+                new MySqlParameter("@L2l", newSensor.L2l),
+                new MySqlParameter("@L3l", newSensor.L3l),
+                new MySqlParameter("@L4l", newSensor.L4l)};
 
-            string cmdText = "update analogSensor set address=@address,description=@description,interval=@interval" +
-                "format=@format,md=@md,mu=@mu,ut=@ut,H4l=@H4l,H3l=@H3l,H2l=@H2l,H1l=@H1l," +
-                "L1l=@L1l,L2l=@L2l,L3l=@L3l,L4l=@L4l, where name = @name";
+                string cmdText = "update analogSensor set address=@address,description=@description,aInterval=@interval" +
+                    ",aFormat=@format,aMd=@md,aMu=@mu,ut=@ut,h4l=@H4l,h3l=@H3l,h2l=@H2l,h1l=@H1l," +
+                    "l1l=@L1l,l2l=@L2l,l3l=@L3l,l4l=@L4l where name = @name;";
 
-            return this.MySqlHelper.ExecuteNonQuery(cmdText, parms);
+                return this.MySqlHelper.ExecuteNonQuery(cmdText, parms);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

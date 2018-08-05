@@ -1,6 +1,6 @@
 ﻿using BLL;
+using DAL;
 using Entity;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -43,20 +43,20 @@ namespace SCSM
                     });
                 }
 
-                UiInformationBLL uiBll = new UiInformationBLL();
+                UiInformationBLL uiBll = new UiInformationBLL(new UiInformationDAL());
 
-                UIInfomation uiInfo = uiBll.GetUiInformationByUser(user);
+                List<UIInfomation> uiInfos = uiBll.GetUiInformationsByUser(user);
 
-                this.Text = uiInfo.Caption;
-                this.title.Text = uiInfo.Title;
+                this.Text = uiInfos[0].Caption;
+                this.title.Text = uiInfos[0].Title;
 
-                List<Station> modules = new List<Station>();
+                List<Station> stations = new List<Station>();
 
-                StationBLL stationBLl = new StationBLL();
+                StationBLL stationBLl = new StationBLL(new StationsDAL());
 
-                modules = stationBLl.GetStationsByUser(this.User);
+                stations = stationBLl.GetStationsByUser(this.User);
 
-                ShowStation(modules);
+                ShowStation(stations);
             }
         }
 
@@ -148,27 +148,8 @@ namespace SCSM
             InitializeComponent();
 
             this.dataGridView1.ReadOnly = true;
-
-            TestCode();
         }
         
-        private void TestCode() {
-
-            AlarmBLL bll = new AlarmBLL();
-
-            //Alarm alarm = new Alarm(2, "testAddress", "dectription33333");
-            //bll.Add(alarm);
-
-            //Alarm alarm = new Alarm(3);
-            //bll.Delete(alarm);
-
-            //bll.Modify(new Alarm(4), new Alarm(2, "modify address", ""));
-
-            //int a = 2;
-            //Alarm alarm = (Alarm)bll.GetObjById(a.ToString());
-  
-        }
-
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized) {
@@ -288,7 +269,7 @@ namespace SCSM
                 case 1:
                     break;
                 case 2:
-                    LogBLL logBLL = new LogBLL();
+                    LogBLL logBLL = new LogBLL(new LogDAL());
                     string strSQL = "select top 20 * from Logs";
                     //MySqlParameter[] parms = new MySqlParameter[] { };
                     List<object> logs = logBLL.GetObjsBySQL(strSQL,null);

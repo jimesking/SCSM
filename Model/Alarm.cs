@@ -4,13 +4,13 @@ namespace Entity
 {
     public class Alarm
     {
-        private int id;
+        private long id;
         private int type;
         private string address;
         private System.DateTime time;
         private string description;
 
-        public int Id
+        public long Id
         {
             get
             {
@@ -84,6 +84,7 @@ namespace Entity
         {
             this.Type = type;
             this.Address = address;
+
             this.Description = description;
         }
     }

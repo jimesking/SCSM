@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDal.cs" />
     <Compile Include="AlarmDAL.cs" />
     <Compile Include="AnaSensorDAL.cs" />
     <Compile Include="AnaSensorDataDAL.cs" />

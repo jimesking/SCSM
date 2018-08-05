@@ -3,6 +3,7 @@ namespace Entity
 {
     public class AnaSensorData
     {
+        private long id;
         private string name;
         private DateTime time;
         private bool q;
@@ -59,9 +60,24 @@ namespace Entity
                 time = value;
             }
         }
-        public AnaSensorData() { }
-        public AnaSensorData(string name, bool q, double av)
+
+        public long Id
         {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+
+        public AnaSensorData() { }
+        public AnaSensorData(long id,string name, bool q, double av)
+        {
+            this.Id = id;
             this.Name = name;
             this.Q = q;
             this.Av = av;

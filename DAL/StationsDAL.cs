@@ -38,12 +38,29 @@ namespace DAL
 
         public int ExcuteSqlStr(string strSQL, MySqlParameter[] parms)
         {
-            throw new NotImplementedException();
+            return this.MySqlHelper.ExecuteNonQuery(strSQL, parms);
         }
 
         public List<object> GetAllObjs()
         {
-            throw new NotImplementedException();
+            List<object> objs = new List<object>();
+
+            string cmdText = "select * from station";
+
+            MySqlDataReader reader = this.MySqlHelper.ExecuteReader(cmdText, null);
+
+            while (reader.Read())
+            {
+                Station station = new Station();
+                station.Name = reader[0].ToString().Trim();
+                station.Address = new SensorAddress(reader[1].ToString().Trim());
+                station.Description = reader[2].ToString().Trim();
+                station.ModuleCount = int.Parse(reader[3].ToString().Trim());
+                objs.Add(station);
+            }
+            this.mySqlHelper.CloseConn();
+
+            return objs;
         }
 
         public object GetObjById(string id)
@@ -70,7 +87,22 @@ namespace DAL
 
         public List<object> GetObjsBySQL(string strSQL, MySqlParameter[] parms)
         {
-            throw new NotImplementedException();
+            List<object> objs = new List<object>();
+
+            MySqlDataReader reader = this.MySqlHelper.ExecuteReader(strSQL, parms);
+
+            while (reader.Read())
+            {
+                Station station = new Station();
+                station.Name = reader[0].ToString().Trim();
+                station.Address = new SensorAddress(reader[1].ToString().Trim());
+                station.Description = reader[2].ToString().Trim();
+                station.ModuleCount = int.Parse(reader[3].ToString().Trim());
+                objs.Add(station);
+            }
+            this.mySqlHelper.CloseConn();
+
+            return objs;
         }
 
         public int Modify(object oldObj, object newObj)
@@ -86,7 +118,7 @@ namespace DAL
                 new MySqlParameter("@moduleCount",newStation.ModuleCount)
             };
 
-            string cmdText = "update station set name=@newName,address=@address,decription=@decription,moduleCount=@moduleCount where name = @oldName";
+            string cmdText = "update station set name=@newName,address=@address,description=@decription,moduleCount=@moduleCount where name = @oldName";
 
             return base.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }

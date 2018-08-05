@@ -98,34 +98,9 @@ namespace DAL
             return new List<object>();
         }
 
-        public User GetUserByNameAndPassword(string userName, string password)
-        {
-            MySqlParameter[] parms = new MySqlParameter[] {
-                new MySqlParameter("@name",userName),
-                new MySqlParameter("@password",password)
-            };
-
-            string cmdText = "select * from userInfo where name = @name and password = @password";
-
-            User user = null;
-
-            MySqlDataReader reader = this.MySqlHelper.ExecuteReader(cmdText, parms);
-
-            while (reader.Read())
-            {
-                user = new User();
-                user.Name = reader[0].ToString().Trim();
-                user.Password = reader[1].ToString().Trim();
-                user.Role = int.Parse(reader[2].ToString().Trim());
-            }
-            this.mySqlHelper.CloseConn();
-
-            return user;
-        }
-
         public int ExcuteSqlStr(string strSQL, MySqlParameter[] parms)
         {
-            throw new NotImplementedException();
+            return this.MySqlHelper.ExecuteNonQuery(strSQL, parms);
         }
     }
 }

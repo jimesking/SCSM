@@ -1,54 +1,29 @@
 ﻿using DAL;
 using Entity;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 
 namespace BLL
 {
-    public class StationBLL:IBLL
+    public class StationBLL : BaseBLL
     {
-        public static StationsDAL dal = new StationsDAL();
-
-        public int Add(object obj)
+        public StationBLL(IDAL dal) : base(dal)
         {
-            return dal.Add(obj);
         }
+        public List<Station> GetStationsByUser(User user) {
+            MySqlParameter[] parms = new MySqlParameter[] {
+                new MySqlParameter("@userName",user.Name)
+            };
+            string strSQL = "select * from station where address like @userName";
 
-        public int Delete(object obj)
-        {
-            return dal.Add(obj);
-        }
+            List<object> objs = base.Dal.GetObjsBySQL(strSQL, parms);
+            List<Station> stations = new List<Station>();
 
-        public List<object> GetAllObjs()
-        {
-            return dal.GetAllObjs();
-        }
+            foreach (object obj in objs) {
+                stations.Add((Station)obj);
+            }
 
-        public object GetObjById(string id)
-        {
-            return dal.GetObjById(id);
-        }
-
-        public List<object> GetObjsBySQL(string strSQL, MySqlParameter[] parms)
-        {
-            return dal.GetObjsBySQL(strSQL, parms);
-        }
-
-        public int Modify(object oldObj, object newObj)
-        {
-            return dal.Modify(oldObj, newObj);
-        }
-
-        public int ExcuteSqlStr(string strSQL)
-        {
-            MySqlParameter[] parms = new MySqlParameter[] { };
-            return dal.ExcuteSqlStr(strSQL, parms);
-        }
-
-        public List<Station> GetStationsByUser(User user)
-        {
-            return dal.GetStationsByUser(user);
+            return stations;
         }
     }
 }

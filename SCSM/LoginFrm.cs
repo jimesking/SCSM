@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using Entity;
 using System;
 using System.Windows.Forms;
@@ -41,7 +42,7 @@ namespace SCSM
             }
 
             User user = null;
-            UserBLL userBLL = new UserBLL();
+            UserBLL userBLL = new UserBLL(new UserDAL());
 
             user = userBLL.GetUserByNameAndPassword(this.UserName.Text.Trim(), this.Password.Text.Trim());
 

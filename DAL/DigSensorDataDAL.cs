@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    class DigSensorDataDAL : BaseDal, IDAL
+    public class DigSensorDataDAL : BaseDal, IDAL
     {
         public int Add(object obj)
         {
@@ -25,37 +25,87 @@ namespace DAL
         /// <returns>受影响的行数</returns>
         public int Delete(object obj)
         {
-            DigitalSensor sensor = (DigitalSensor)obj;
+            DigSensorData data = (DigSensorData)obj;
+            
             MySqlParameter[] parms = new MySqlParameter[] {
-                new MySqlParameter(",name",sensor.Name)
+                new MySqlParameter("id",data.Id)
             };
-            string cmdText = "delete from digSensorData where name=@name";
+            string cmdText = "delete from digSensorData where id=@id";
             return base.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }
 
         public int ExcuteSqlStr(string strSQL, MySqlParameter[] parms)
         {
-            throw new NotImplementedException();
+            return this.MySqlHelper.ExecuteNonQuery(strSQL, parms);
         }
 
+        /// <summary>
+        /// 不实现该方法
+        /// </summary>
+        /// <returns></returns>
         public List<object> GetAllObjs()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public object GetObjById(string id)
         {
-            throw new NotImplementedException();
+            long LId;
+            LId = long.Parse(id);
+            DigSensorData digData = new DigSensorData();
+
+            string cmdText = "select * from digSensorData where id=@id";
+
+            MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@id", id) };
+
+            MySqlDataReader reader = this.MySqlHelper.ExecuteReader(cmdText, parms);
+
+            while (reader.Read())
+            {
+                digData.Id = long.Parse(id);    
+                digData.Name = reader[0].ToString().Trim();
+                digData.Time = DateTime.Parse(reader[1].ToString().Trim());
+                digData.Q = bool.Parse(reader[2].ToString().Trim());
+                digData.Dv = bool.Parse(reader[2].ToString().Trim());
+            }
+            this.mySqlHelper.CloseConn();
+
+            return digData;
         }
 
         public List<object> GetObjsBySQL(string strSQL, MySqlParameter[] parms)
         {
-            throw new NotImplementedException();
-        }
+            List<object> objs = new List<object>();
 
+            MySqlDataReader reader = this.MySqlHelper.ExecuteReader(strSQL, parms);
+
+            while (reader.Read())
+            {
+                DigSensorData digData = new DigSensorData();
+                digData.Id = long.Parse(reader[0].ToString().Trim());
+                digData.Name = reader[1].ToString().Trim();
+                digData.Time = DateTime.Parse(reader[2].ToString().Trim());
+
+                if ("0"==reader[3].ToString().Trim())
+                    digData.Q = false;
+                else
+                    digData.Dv = true;
+
+                objs.Add(digData);
+            }
+            this.mySqlHelper.CloseConn();
+
+            return objs;
+        }
+        /// <summary>
+        /// 不实现该方法，数据不允许修改
+        /// </summary>
+        /// <param name="oldObj"></param>
+        /// <param name="newObj"></param>
+        /// <returns></returns>
         public int Modify(object oldObj, object newObj)
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

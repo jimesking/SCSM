@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using Entity;
 using System;
 using System.Windows.Forms;
@@ -64,7 +65,7 @@ namespace SCSM
         {
             if (true == checkInput())
             {
-                UserBLL userBLL = new UserBLL();
+                UserBLL userBLL = new UserBLL(new UserDAL());
 
                 User user = new User(textBox1.Text.Trim(), textBox2.Text.Trim(), int.Parse(comboBox1.Text.Trim()));
 
@@ -86,7 +87,7 @@ namespace SCSM
                 int ret = 0;
                 if (dr == DialogResult.OK)
                 {
-                    UserBLL userBll = new UserBLL();
+                    UserBLL userBll = new UserBLL(new UserDAL());
                     User user = new User(listBox1.SelectedItem.ToString().Trim());
                     ret = userBll.Delete(user);                   
                 }
@@ -107,7 +108,7 @@ namespace SCSM
                 string rePassword = textBox3.Text.Trim();
                 int role = int.Parse(comboBox1.Text.Trim());
 
-                UserBLL userBll = new UserBLL();
+                UserBLL userBll = new UserBLL(new UserDAL());
 
                 User oldUser = (User)userBll.GetObjById(listBox1.SelectedItem.ToString().Trim());
                 User newUser = new User(name, password, role);
@@ -121,7 +122,7 @@ namespace SCSM
             GetUsersAndDisplay();
         }
         private void GetUsersAndDisplay() {
-            UserBLL userBLL = new UserBLL();
+            UserBLL userBLL = new UserBLL(new UserDAL());
             listBox1.Items.Clear();
 
             if (userBLL.GetAllObjs().Count > 0)
@@ -145,7 +146,7 @@ namespace SCSM
                     {
                         listBox1.SelectedIndex = index;
                         string userName = listBox1.Items[index].ToString().Trim();
-                        UserBLL userBLL = new UserBLL();
+                        UserBLL userBLL = new UserBLL(new UserDAL());
                         User user = (User)userBLL.GetObjById(userName);
                         textBox1.Text = user.Name;
                         textBox2.Text = user.Password;

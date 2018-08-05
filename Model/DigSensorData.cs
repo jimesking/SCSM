@@ -4,6 +4,7 @@ namespace Entity
 {
     public class DigSensorData
     {
+        private long id;
         private string name;
         private DateTime time;
         private bool q;
@@ -61,7 +62,21 @@ namespace Entity
             }
         }
 
-        public DigSensorData(string name, bool q, bool dv)
+        public long Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+        public DigSensorData() { }
+
+        public DigSensorData(long id,string name, bool q, bool dv)
         {
             this.Name = name;
             this.Q = q;

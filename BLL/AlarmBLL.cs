@@ -6,7 +6,6 @@ namespace BLL
     {
         public AlarmBLL(IDAL dal) : base(dal)
         {
-
         }
         //private static AlarmDAL dal = new AlarmDAL();
         //public int Add(object alarm)

@@ -4,19 +4,18 @@ namespace Entity
 {
     public class Log
     {
-        private int id;
+        private long id;
         private int type;
         private SensorAddress address;
         private DateTime time;
                 
         private string description;
 
-        public Log( int type, SensorAddress address,DateTime time, string description)
+        public Log() { }
+        public Log(long id, int type, SensorAddress address, string description)
         {
             this.Type = type;
-            this.Address = address;
-            this.time = time;
-            
+            this.Address = address;           
             this.Description = description;
         }
 
@@ -73,7 +72,7 @@ namespace Entity
             }
         }
 
-        public int Id
+        public long Id
         {
             get
             {

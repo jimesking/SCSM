@@ -17,7 +17,7 @@ namespace DAL
                 new MySqlParameter("@aInterval",sensor.Interval)
             };
 
-            string cmdText = "insert into digitalSnesor(name, address, description, aInterval) values(@name, @address, @description, @aInterval);";
+            string cmdText = "insert into digitalSensor(name, address, description, aInterval) values(@name, @address, @description, @aInterval);";
 
             return MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }
@@ -25,9 +25,9 @@ namespace DAL
         public int Delete(object obj)
         {
             DigitalSensor sensor = (DigitalSensor)obj;
-            MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@id", sensor.Name) };
+            MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@name", sensor.Name) };
 
-            string cmdText = "delete from digitalSnesor where name=@name";
+            string cmdText = "delete from digitalSensor where name=@name";
 
             return this.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }
@@ -41,7 +41,7 @@ namespace DAL
         {
             List<object> objs = new List<object>();
 
-            string cmdText = "select * from digitalSnesor";
+            string cmdText = "select * from digitalSensor";
 
             MySqlParameter[] parms = new MySqlParameter[] { };
 
@@ -54,7 +54,7 @@ namespace DAL
                 sensor.Address = new SensorAddress(reader[1].ToString().Trim());
                 sensor.Description = reader[2].ToString().Trim();
 
-                sensor.Interval = int.Parse(reader[2].ToString().Trim());
+                sensor.Interval = int.Parse(reader[3].ToString().Trim());
                 objs.Add(sensor);
             }
             this.mySqlHelper.CloseConn();
@@ -66,7 +66,7 @@ namespace DAL
         {
             DigitalSensor anaSensor = new DigitalSensor();
 
-            string cmdText = "select * from digitalSnesor where name=@id";
+            string cmdText = "select * from digitalSensor where name=@id";
 
             MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@id", id) };
 
@@ -117,7 +117,7 @@ namespace DAL
                 new MySqlParameter("@description", oldSensor.Description),
                 new MySqlParameter("@interval",oldSensor.Interval) };
 
-            string cmdText = "update digitalSnesor set address=@address,description=@description,interval=@interval where name = @name";
+            string cmdText = "update digitalSensor set address=@address,description=@description,aInterval=@interval where name = @name";
 
             return this.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }

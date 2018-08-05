@@ -48,21 +48,19 @@ namespace DAL
 
         public object GetObjById(string id)
         {
-            int iId = int.Parse(id);
+            Alarm alarm = new Alarm(int.Parse(id));
 
-            Alarm alarm = new Alarm(iId);
-
-            string cmdText = "select aType,address,description from alarm where id=@id";
+            string cmdText = "select * from alarm where id=@id";
 
             MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@id",alarm.Id)};
 
             MySqlDataReader reader = this.MySqlHelper.ExecuteReader(cmdText, parms);
 
             while(reader.Read()){
-                alarm.Type = int.Parse(reader[0].ToString().Trim());
-                alarm.Address = reader[1].ToString().Trim();
-                alarm.Time = DateTime.Parse(reader[2].ToString());
-                alarm.Description = reader[3].ToString().Trim();
+                alarm.Type = int.Parse(reader[1].ToString().Trim());
+                alarm.Address = reader[2].ToString().Trim();
+                alarm.Time = DateTime.Parse(reader[3].ToString());
+                alarm.Description = reader[4].ToString().Trim();
             }
             this.mySqlHelper.CloseConn();
             return alarm;
@@ -72,7 +70,7 @@ namespace DAL
         {
             List<object> objs = new List<object>();
 
-            string cmdText = "select aType,address,description from alarm";
+            string cmdText = "select * from alarm";
 
             MySqlParameter[] parms = new MySqlParameter[] { };
 
@@ -81,10 +79,11 @@ namespace DAL
             while (reader.Read())
             {
                 Alarm alarm = new Alarm();
-                alarm.Type = int.Parse(reader[0].ToString().Trim());
-                alarm.Address = reader[1].ToString().Trim();
-                alarm.Time = DateTime.Parse(reader[2].ToString().Trim());
-                alarm.Description = reader[3].ToString().Trim();
+                alarm.Id = long.Parse(reader[0].ToString().Trim());
+                alarm.Type = int.Parse(reader[1].ToString().Trim());
+                alarm.Address = reader[2].ToString().Trim();
+                alarm.Time = DateTime.Parse(reader[3].ToString());
+                alarm.Description = reader[4].ToString().Trim();
 
                 objs.Add(alarm);
             }
@@ -102,10 +101,11 @@ namespace DAL
             while (reader.Read())
             {
                 Alarm alarm = new Alarm();
-                alarm.Type = int.Parse(reader[0].ToString().Trim());
-                alarm.Address = reader[1].ToString().Trim();
-                alarm.Time = DateTime.Parse(reader[2].ToString().Trim());
-                alarm.Description = reader[3].ToString().Trim();
+                alarm.Id = int.Parse(reader[0].ToString().Trim());
+                alarm.Type = int.Parse(reader[1].ToString().Trim());
+                alarm.Address = reader[2].ToString().Trim();
+                alarm.Time = DateTime.Parse(reader[3].ToString().Trim());
+                alarm.Description = reader[4].ToString().Trim();
 
                 objs.Add(alarm);
             }

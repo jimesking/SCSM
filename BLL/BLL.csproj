@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlarmBLL.cs" />
-    <Compile Include="AnaSensoBLL.cs" />
+    <Compile Include="AnaSensorBLL.cs" />
+    <Compile Include="AnaSensorDataBLL.cs" />
     <Compile Include="BaseBLL.cs" />
+    <Compile Include="DigSensorDataBLL.cs" />
     <Compile Include="IBLL.cs" />
     <Compile Include="LogBLL.cs" />
     <Compile Include="MapBLL.cs" />

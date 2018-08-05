@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-
 namespace Entity
 {
     public class Station

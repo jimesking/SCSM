@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    class AnaSensorDataDAL : BaseDal, IDAL
+    public class AnaSensorDataDAL : BaseDal, IDAL
     {
+        
         public int Add(object obj)
         {
             AnaSensorData data = (AnaSensorData)obj;
@@ -28,13 +29,13 @@ namespace DAL
         /// <returns删除数据库中指定传感器的数据></returns>
         public int Delete(object obj)
         {
-            AnalogSensor sensor = (AnalogSensor)obj;
+            AnaSensorData data = (AnaSensorData)obj;
 
             MySqlParameter[] parms = new MySqlParameter[] {
-                new MySqlParameter("@id",sensor.Name)
+                new MySqlParameter("@id",data.Id)
             };
 
-            string cmdText = "delete from anaSensorData where name=@name";
+            string cmdText = "delete from anaSensorData where id=@id";
 
             return base.MySqlHelper.ExecuteNonQuery(cmdText, parms);
         }
@@ -50,7 +51,7 @@ namespace DAL
         /// <returns></returns>
         public List<object> GetAllObjs()
         {
-            throw new NotImplementedException();
+            return null;
         }
         /// <summary>
         /// 获取某个传感器的所有数据
@@ -61,7 +62,7 @@ namespace DAL
         {
             AnaSensorData anaData = new AnaSensorData();
 
-            string cmdText = "select * from userInfo where name=@id";
+            string cmdText = "select * from anaSensorData where id=@id";
 
             MySqlParameter[] parms = new MySqlParameter[] { new MySqlParameter("@id", id) };
 
@@ -69,10 +70,15 @@ namespace DAL
 
             while (reader.Read())
             {
-                anaData.Name = reader[0].ToString().Trim();
-                anaData.Time = DateTime.Parse(reader[1].ToString().Trim());
-                anaData.Q = bool.Parse(reader[2].ToString().Trim());
-                anaData.Av = double .Parse(reader[2].ToString().Trim());
+                anaData.Id = long.Parse(id);
+                anaData.Name = reader[1].ToString().Trim();
+                anaData.Time = DateTime.Parse(reader[2].ToString().Trim());
+                if (reader[3].ToString().Trim() == "0")
+                    anaData.Q = false;
+                else
+                    anaData.Q = true;
+
+                anaData.Av = double .Parse(reader[4].ToString().Trim());
             }
             this.mySqlHelper.CloseConn();
 
@@ -89,10 +95,16 @@ namespace DAL
             while (reader.Read())
             {
                 AnaSensorData anaData = new AnaSensorData();
-                anaData.Name = reader[0].ToString().Trim();
-                anaData.Time = DateTime.Parse(reader[1].ToString().Trim());
-                anaData.Q = bool.Parse(reader[2].ToString().Trim());
-                anaData.Av = double.Parse(reader[2].ToString().Trim());
+                anaData.Id = long.Parse(reader[0].ToString().Trim());
+                anaData.Name = reader[1].ToString().Trim();
+                anaData.Time = DateTime.Parse(reader[2].ToString().Trim());
+
+                if (reader[3].ToString().Trim() == "0")
+                    anaData.Q = false;
+                else
+                    anaData.Q = true;
+
+                anaData.Av = double.Parse(reader[4].ToString().Trim());
 
                 objs.Add(anaData);
             }
@@ -100,11 +112,15 @@ namespace DAL
 
             return objs;
         }
-
+        /// <summary>
+        /// 不实现该方法，数据不允许修改
+        /// </summary>
+        /// <param name="oldObj"></param>
+        /// <param name="newObj"></param>
+        /// <returns></returns>
         public int Modify(object oldObj, object newObj)
         {
-            //此方法不需要实现
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

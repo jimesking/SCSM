@@ -1,54 +1,30 @@
 ﻿using DAL;
 using System;
-using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using Entity;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace BLL
 {
-    public class UiInformationBLL:IBLL
+    public class UiInformationBLL:BaseBLL
     {
-        public static UiInformationDAL dal = new UiInformationDAL();
-
-        public int Add(object obj)
+        public UiInformationBLL(IDAL dal) : base(dal)
         {
-            return dal.Add(obj);
         }
 
-        public int Delete(object obj)
+        public List<UIInfomation> GetUiInformationsByUser(User user)
         {
-            return dal.Delete(obj);
-        }
+            MySqlParameter[] parms = new MySqlParameter[] {
+                new MySqlParameter("@userName",user.Name)
+            };
 
-        public List<object> GetAllObjs()
-        {
-            return dal.GetAllObjs();
-        }
+            List<object> list =  base.Dal.GetObjsBySQL("select * from UIInfomation where userName = @userName", parms);
 
-        public object GetObjById(string id)
-        {
-            return dal.GetObjById(id);
-        }
-
-        public List<object> GetObjsBySQL(string strSQL, MySqlParameter[] parms)
-        {
-            return dal.GetObjsBySQL(strSQL, parms);
-        }
-
-        public int Modify(object oldObj, object newObj)
-        {
-            return dal.Modify(oldObj, newObj);
-        }
-
-        public int ExcuteSqlStr(string strSQL)
-        {
-            MySqlParameter[] parms = new MySqlParameter[] { };
-            return dal.ExcuteSqlStr(strSQL,parms);
-        }
-
-        public UIInfomation GetUiInformationByUser(User user)
-        {
-            throw new NotImplementedException();
+            List<UIInfomation> uis = new List<UIInfomation>();
+            foreach (object obj in list) {
+                uis.Add((UIInfomation)obj);
+            }
+            return uis;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using Entity;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace SCSM
         }
         private void StationConfig_Load(object sender, EventArgs e)
         {
-            StationBLL stationBll = new StationBLL();
+            StationBLL stationBll = new StationBLL(new StationsDAL());
             oldStations = stationBll.GetStationsByUser(mainFrm.User);
 
             oldNode = treeView1.Nodes[this.mainFrm.User.Name];
@@ -56,7 +57,7 @@ namespace SCSM
 
         private List<Module> GetCurrentStationModules(Station station) {
             List<Module> modules = new List<Module>();
-            ModuleBLL moduleBll = new ModuleBLL();
+            ModuleBLL moduleBll = new ModuleBLL(new ModuleDAL());
             List<object> objects= moduleBll.GetAllObjs();
             foreach (object obj in objects) {
                 modules.Add((Module)obj);
@@ -79,13 +80,13 @@ namespace SCSM
         }
         private List<AnalogSensor> GetCurrentModuleAnaSensors(Module module) {
  
-            AnaSensorBLL anaSensorBLL = new AnaSensorBLL();
+            AnaSensorBLL anaSensorBLL = new AnaSensorBLL(new AnaSensorDAL());
             List<AnalogSensor> anaSensors= new List<AnalogSensor>();
   
             return anaSensors;
         }
         private List<DigitalSensor> GetCurrentModuleDigSensors(Module module) {
-            DigSensorBLL digSensorBLL = new DigSensorBLL();
+            DigSensorBLL digSensorBLL = new DigSensorBLL(new DigSensorDAL());
             List<DigitalSensor> digitalSensors = new List<DigitalSensor>();
 
             return digitalSensors;
@@ -173,7 +174,7 @@ namespace SCSM
                 if (this.CheckAnaSensorInput() == true)
                 {
                     string sqlstr = "";
-                    AnaSensorBLL bll = new AnaSensorBLL();
+                    AnaSensorBLL bll = new AnaSensorBLL(new AnaSensorDAL());
                     return bll.ExcuteSqlStr(sqlstr);
                 }
                 else {
