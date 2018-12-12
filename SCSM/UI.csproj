@@ -140,6 +140,10 @@
       <Project>{8ACF0177-FD93-4721-A23A-89628AAB70E9}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SCSMController\SCSMController.csproj">
+      <Project>{7BDA1441-64AD-4366-A831-E13D5C17C7B1}</Project>
+      <Name>SCSMController</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

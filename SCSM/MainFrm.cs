@@ -46,9 +46,10 @@ namespace SCSM
                 UiInformationBLL uiBll = new UiInformationBLL(new UiInformationDAL());
 
                 List<UIInfomation> uiInfos = uiBll.GetUiInformationsByUser(user);
-
-                this.Text = uiInfos[0].Caption;
-                this.title.Text = uiInfos[0].Title;
+                if (uiInfos.Count > 0) {
+                    this.Text = uiInfos[0].Caption;
+                    this.title.Text = uiInfos[0].Title;
+                }
 
                 List<Station> stations = new List<Station>();
 
@@ -270,7 +271,7 @@ namespace SCSM
                     break;
                 case 2:
                     LogBLL logBLL = new LogBLL(new LogDAL());
-                    string strSQL = "select top 20 * from Logs";
+                    string strSQL = "select * from loginfo limit 20;";
                     //MySqlParameter[] parms = new MySqlParameter[] { };
                     List<object> logs = logBLL.GetObjsBySQL(strSQL,null);
                     if (logs.Count > 0)

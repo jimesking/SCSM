@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Comm
 {
-    public class Modbus
+    class Comm
     {
-         
+        public static int SaveModbusData() {
+
+            return 0;
+        }
     }
 }
